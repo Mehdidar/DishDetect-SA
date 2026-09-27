@@ -1,0 +1,70 @@
+============================================================
+GERMAN DISHES CLASSIFICATION REPORT
+Model: MobileNetV3-Large + YOLOv8n-seg
+============================================================
+
+1. OVERALL METRICS
+------------------------------------------------------------
+Total Images : 2191
+Correct      : 2093 (95.53%)
+Incorrect    : 98 (4.47%)
+Uncertain    : 193 (confidence < 65%)
+Avg Conf     : 86.63%
+
+Accuracy     : 95.53%
+Precision    : 0.9553
+Recall       : 0.9553
+F1-Score     : 0.9553
+
+2. PER-CLASS METRICS
+------------------------------------------------------------
+              precision    recall  f1-score   support
+
+     non_veg       0.96      0.96      0.96      1172
+         veg       0.95      0.95      0.95      1019
+
+    accuracy                           0.96      2191
+   macro avg       0.96      0.95      0.96      2191
+weighted avg       0.96      0.96      0.96      2191
+
+3. CONFUSION MATRIX (labels: non_veg, veg)
+------------------------------------------------------------
+TN (True non_veg): 1124
+FP (False veg)   : 48
+FN (False non_veg): 50
+TP (True veg)    : 969
+
+4. PER-DISH ACCURACY
+------------------------------------------------------------
+Dish                           Label        Accuracy Correct/Total
+------------------------------------------------------------
+Kartoffelpuffer                veg             83.3%  (60/72)
+Bratkartoffeln                 veg             84.0%  (63/75)
+Garnelen gebraten              non_veg         88.9%  (64/72)
+Schnitzel                      non_veg         90.7%  (68/75)
+Gulaschsuppe                   non_veg         92.0%  (69/75)
+Calamari fritti                non_veg         93.1%  (67/72)
+Fischstäbchen                 non_veg         93.1%  (67/72)
+Spätzle                       veg             93.3%  (70/75)
+Maultaschen                    non_veg         94.4%  (68/72)
+Flädlesuppe                   veg             94.7%  (71/75)
+Quarkbällchen                 veg             94.7%  (71/75)
+Königsberger Klopse            non_veg         94.7%  (72/76)
+Bratwurst                      non_veg         95.8%  (69/72)
+Kartoffelgratin                veg             96.0%  (72/75)
+Kürbissuppe                   veg             96.0%  (72/75)
+Lachs braten                   non_veg         97.2%  (70/72)
+Käsespätzle                  veg             97.3%  (73/75)
+Milchreis                      veg             98.0%  (49/50)
+Currywurst                     non_veg         98.6%  (71/72)
+Forelle Müllerin Art          non_veg         98.6%  (71/72)
+Krabbenbrötchen               non_veg         98.6%  (71/72)
+Käsekuchen                    veg             98.6%  (71/72)
+Erbsensuppe                    veg             98.7%  (74/75)
+Flammkuchen                    veg             98.7%  (74/75)
+Joghurt mit Früchten          veg             98.7%  (74/75)
+Leberknödelsuppe               non_veg         98.7%  (75/76)
+Miesmuscheln                   non_veg        100.0%  (72/72)
+Rouladen                       non_veg        100.0%  (75/75)
+Sauerbraten                    non_veg        100.0%  (75/75)
+Brokkolisuppe                  veg            100.0%  (75/75)

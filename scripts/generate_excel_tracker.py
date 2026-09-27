@@ -1,0 +1,68 @@
+import csv
+
+headers = [
+    "Phase", 
+    "Model Architecture", 
+    "Dataset Used", 
+    "Target Classes", 
+    "Validation Accuracy",
+    "Learning Rate",
+    "Batch Size & Epochs",
+    "Key Changes / Processing Steps", 
+    "Observations"
+]
+
+data = [
+    [
+        "1. Baseline 25-Class Arabic",
+        "MobileNetV3-Large",
+        "Arabic 25 Dishes (Original)",
+        "25 distinct dish names",
+        "Good (Baseline Qualitative)",
+        "Stage 1: 1e-3, Stage 2: 1e-5 (AdamW)",
+        "Batch Size: 32, Epochs: Stage1=15, Stage2=25",
+        "Trained a baseline image classifier to predict the exact name of the dish from 25 categories.",
+        "Accuracy was good initially, though visual ambiguity (like rice and meat variations) caused some confusion between classes."
+    ],
+    [
+        "2. Binary Categorization Arabic",
+        "EfficientNet-B2",
+        "Arabic Dishes (Categorized)",
+        "2 (veg vs non_veg)",
+        "89.30%",
+        "1e-3 to 1e-5 (Two-stage fine-tuning)",
+        "Batch Size: 32, Epochs: max 40 (Early stopping patience 7)",
+        "Restructured the dataset into 'veg' and 'non_veg' categories to simplify the task. Switched to EfficientNet-B2 for better feature extraction. Added Label Smoothing (0.1).",
+        "Significant accuracy jump. Model proved that learning high-level dietary features is much easier than exact dish names."
+    ],
+    [
+        "3. Cross-Domain Fine-Tuning (German)",
+        "MobileNetV3-Large + YOLOv8n-seg",
+        "German Restaurant Dishes",
+        "2 (veg vs non_veg)",
+        "95.53%",
+        "Stage 1 (Head): 1e-3, Stage 2 (Backbone): 1e-5",
+        "Batch Size: 32, Epochs: Stage1=15, Stage2=25",
+        "Fine-tuned the Arabic model on a new German dataset. Introduced YOLOv8 segmentation to crop out backgrounds/plates before classification.",
+        "Segmentation dramatically removed background noise, pushing accuracy to ~95.5%. Proved transfer learning between cuisines works."
+    ],
+    [
+        "4. Real-World Restaurant Testing",
+        "MobileNetV3-Large + YOLOv8n-seg (Fine-tuned)",
+        "External Arabic Restaurant Data (53 imgs)",
+        "2 (veg vs non_veg)",
+        "77.36% (41/53)",
+        "N/A (Evaluation Only)",
+        "N/A (Evaluation Only)",
+        "Tested the final German-tuned model on unseen real-world Arabic dishes. Images were grouped by dish and mapped to veg/non_veg labels.",
+        "Model struggles specifically with visually ambiguous dishes (e.g., golden-brown cheese pastries looking like meat pies, or rice dominating meat)."
+    ]
+]
+
+filename = 'Model_Evolution_Tracker.csv'
+with open(filename, 'w', newline='', encoding='utf-8') as f:
+    writer = csv.writer(f)
+    writer.writerow(headers)
+    writer.writerows(data)
+
+print(f"Successfully generated {filename}")

@@ -1,0 +1,35 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Project Specific Ignored Folders
+datasets/
+checkpoints/
+weights/
+logs/
+results*/
+*.log
+MobileNet_V3_Complete/
+german_model_package/
+
+# Large Model Files
+*.pt
+*.pth
+*.onnx
+*.pb
+
+# Reports and Analysis (Optional, depending if you want them in git)
+# docs/
+
+# IDE
+.vscode/
