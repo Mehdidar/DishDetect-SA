@@ -299,8 +299,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate Food Classifier on val or test split")
     parser.add_argument("--model",       type=str,  default='mobilenet_v3_large',
                         choices=[
-                            'efficientnet_b2', 'efficientnet_b2_yolo_seg', 'efficientnet_b2_vegan',
-                            'mobilenet_v3_large', 'mobilenet_v3_large_yolo', 'mobilenet_v3_large_yolo_seg', 'mobilenet_v3_large_vegan'
+                            'efficientnet_b2', 'efficientnet_b2_yolo_seg', 'efficientnet_b2_vegan', 'efficientnet_b2_vegan_veg',
+                            'mobilenet_v3_large', 'mobilenet_v3_large_yolo', 'mobilenet_v3_large_yolo_seg', 'mobilenet_v3_large_vegan', 'mobilenet_v3_large_vegan_veg'
                         ])
     parser.add_argument("--split",       type=str,  default='val',
                         choices=['val', 'test'],
