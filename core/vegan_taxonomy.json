@@ -1,0 +1,179 @@
+{
+    "hummus": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Chickpeas, tahini (sesame), olive oil, lemon juice, garlic",
+        "animal_byproduct": null,
+        "rationale": "100% plant-based legumes and oil. Naturally vegan."
+    },
+    "pomegranate_fattoush": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Romaine, tomatoes, cucumbers, toasted pita, sumac, pomegranate molasses, olive oil",
+        "animal_byproduct": null,
+        "rationale": "100% plant-based salad with olive oil dressing. Naturally vegan."
+    },
+    "za\u2019atar_manakish": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Flatbread dough (flour, yeast, water, olive oil), dried thyme, sesame, sumac, olive oil",
+        "animal_byproduct": null,
+        "rationale": "Authentic za'atar flatbread uses only olive oil and herbs; no dairy or eggs."
+    },
+    "spinach_fatayer": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Dough (flour, water, olive oil), spinach, onions, sumac, lemon juice, pine nuts",
+        "animal_byproduct": null,
+        "rationale": "Traditional Middle Eastern spinach pies contain no dairy or egg wash."
+    },
+    "tamees_bread": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Flour, water, yeast, salt, vegetable oil (tandoor-baked)",
+        "animal_byproduct": null,
+        "rationale": "Plain Saudi Tamees is simple leavened wheat bread. 100% vegan."
+    },
+    "okra_tagine": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Baby okra pods, tomato sauce, garlic, coriander, olive oil",
+        "animal_byproduct": null,
+        "rationale": "Bamya bil-Zayt (oil-based okra stew without meat) is 100% plant-based."
+    },
+    "spinach_stew": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Spinach, chickpeas, garlic, cilantro, onions, olive oil",
+        "animal_byproduct": null,
+        "rationale": "Sabanegh bil-Zayt is 100% plant-based."
+    },
+    "sesame_brittle": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Toasted sesame seeds, sugar syrup, glucose, lemon juice, rose water",
+        "animal_byproduct": null,
+        "rationale": "Traditional Simsimiya uses caramelized sugar syrup (no dairy, no honey)."
+    },
+    "onion_soup": {
+        "legacy_diet": "veg",
+        "new_diet": "vegan",
+        "key_ingredients": "Onions, olive oil, vegetable broth, flour, cumin",
+        "animal_byproduct": null,
+        "rationale": "Plant-based Arabic Shorbat Basal without cream/butter."
+    },
+    "fatayer cheese": {
+        "legacy_diet": "veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Pastry dough, Akkawi/Halloumi/Nabulsi cheese, eggs/butter",
+        "animal_byproduct": "Dairy (Cheese, butter, egg wash)",
+        "rationale": "Core filling is dairy cheese."
+    },
+    "rice_pudding": {
+        "legacy_diet": "veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Short-grain rice, whole cow's milk, sugar, cream (ashta)",
+        "animal_byproduct": "Dairy (Cow's milk, heavy cream)",
+        "rationale": "Liquid base is whole dairy milk."
+    },
+    "saffron_cake": {
+        "legacy_diet": "veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Flour, eggs, whole milk, condensed milk, evaporated milk, saffron cream",
+        "animal_byproduct": "Eggs & Dairy (Milk, condensed milk, cream)",
+        "rationale": "High content of eggs, condensed milk, and dairy cream."
+    },
+    "tamriya": {
+        "legacy_diet": "veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Dates, toasted flour, clarified butter (samneh / ghee), cardamom",
+        "animal_byproduct": "Dairy (Clarified butter / samneh / ghee)",
+        "rationale": "Authentic Saudi Tamriya is pan-roasted in dairy samneh/ghee."
+    },
+    "pistachio_tamriya": {
+        "legacy_diet": "veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Dates, samneh / butter, ground pistachios",
+        "animal_byproduct": "Dairy (Clarified butter / ghee)",
+        "rationale": "Contains dairy butter/samneh in the date paste."
+    },
+    "pistachio_sweet": {
+        "legacy_diet": "veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Semolina, sweet cheese, ashta (clotted dairy cream), clarified butter (samneh)",
+        "animal_byproduct": "Dairy (Sweet cheese, ashta cream, ghee)",
+        "rationale": "Contains clotted dairy cream and ghee."
+    },
+    "grilled_kofta": {
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Ground lamb/beef, onions, parsley, spices",
+        "animal_byproduct": "Red Meat (Lamb/Beef)",
+        "rationale": "Direct meat product."
+    },
+    "shawarma": {
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Spiced chicken/lamb/beef slices, garlic paste, pita",
+        "animal_byproduct": "Meat / Poultry",
+        "rationale": "Direct meat product."
+    },
+    "stuffed_pigeon": {
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Whole squab (pigeon), rice/freekeh, spices, giblets",
+        "animal_byproduct": "Poultry (Pigeon)",
+        "rationale": "Direct poultry product."
+    },
+    "kofta_stew": {
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Meatballs (beef/lamb), tomato sauce, potatoes",
+        "animal_byproduct": "Red Meat (Beef/Lamb)",
+        "rationale": "Direct meat product."
+    },
+    "meat-madfoon": {
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Slow-cooked foil-wrapped lamb, spiced rice",
+        "animal_byproduct": "Red Meat (Lamb)",
+        "rationale": "Direct meat product."
+    },
+    "shish tawook": {
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Marinated chicken skewers, yogurt, garlic",
+        "animal_byproduct": "Poultry & Dairy (Chicken, yogurt marinade)",
+        "rationale": "Direct chicken product."
+    },
+    "meat_pie": {
+        "folder_alias": "meat fatayer",
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Pastry dough, spiced minced beef/lamb",
+        "animal_byproduct": "Red Meat",
+        "rationale": "Direct meat product."
+    },
+    "mixed_grill": {
+        "folder_alias": "Mashwiaat",
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Assorted grilled meats (lamb kebab, tawook, chops)",
+        "animal_byproduct": "Red Meat & Poultry",
+        "rationale": "Direct meat product."
+    },
+    "shrimp_sayadiyah": {
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Caramelized onion rice, seasoned shrimp",
+        "animal_byproduct": "Seafood (Shrimp / Crustaceans)",
+        "rationale": "Direct seafood product."
+    },
+    "meat_maqluba": {
+        "legacy_diet": "non_veg",
+        "new_diet": "non_vegan",
+        "key_ingredients": "Layered rice, lamb/chicken, fried vegetables",
+        "animal_byproduct": "Red Meat / Poultry",
+        "rationale": "Direct meat product."
+    }
+}

@@ -123,9 +123,8 @@ def evaluate(args):
     correct = sum(p == l for p, l in zip(all_preds, all_labels_out))
     incorrect = total_images - correct
 
-    # --- Per-class TP/TN/FP/FN (treating 'veg' as positive class if it exists) ---
-    # Class index for 'veg' as positive
-    pos_class = reverse_mapping.get('veg', 1)
+    # --- Per-class TP/TN/FP/FN (treating 'vegan' or 'veg' as positive class) ---
+    pos_class = reverse_mapping.get('vegan', reverse_mapping.get('veg', 1))
     neg_class = 1 - pos_class
     tp = int(cm[pos_class][pos_class]) if cm.shape[0] > pos_class else 0
     tn = int(cm[neg_class][neg_class]) if cm.shape[0] > neg_class else 0
@@ -143,11 +142,11 @@ def evaluate(args):
     print(f"Precision (weighted):{prec:.4f}")
     print(f"Recall (weighted):   {rec:.4f}")
     print(f"F1-Score (weighted): {f1:.4f}")
-    print(f"\nConfusion Matrix (Positive class = 'veg'):")
+    print(f"\nConfusion Matrix (Positive class = '{classes[pos_class]}'):")
     print(f"  True Positives  (TP): {tp}")
     print(f"  True Negatives  (TN): {tn}")
-    print(f"  False Positives (FP): {fp}  (Non-Veg predicted as Veg)")
-    print(f"  False Negatives (FN): {fn}  (Veg predicted as Non-Veg)")
+    print(f"  False Positives (FP): {fp}  (Non-Vegan predicted as Vegan)")
+    print(f"  False Negatives (FN): {fn}  (Vegan predicted as Non-Vegan)")
     print(f"\nClassification Report:\n{report_str}")
 
     if args.split == 'test':
@@ -156,7 +155,7 @@ def evaluate(args):
 
     # --- Save outputs ---
     if args.split == 'test':
-        out_dir = os.path.join('results', 'test')
+        out_dir = os.path.join(results_dir, 'test')
     else:
         out_dir = results_dir
     os.makedirs(out_dir, exist_ok=True)
@@ -299,7 +298,10 @@ def evaluate(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate Food Classifier on val or test split")
     parser.add_argument("--model",       type=str,  default='mobilenet_v3_large',
-                        choices=['efficientnet_b2', 'mobilenet_v3_large', 'mobilenet_v3_large_yolo'])
+                        choices=[
+                            'efficientnet_b2', 'efficientnet_b2_yolo_seg', 'efficientnet_b2_vegan',
+                            'mobilenet_v3_large', 'mobilenet_v3_large_yolo', 'mobilenet_v3_large_yolo_seg', 'mobilenet_v3_large_vegan'
+                        ])
     parser.add_argument("--split",       type=str,  default='val',
                         choices=['val', 'test'],
                         help="Which split to evaluate on. Use 'test' for final unbiased evaluation.")

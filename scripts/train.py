@@ -164,7 +164,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Food Classifier")
     parser.add_argument("--dataset", type=str, required=True, help="Path to the dataset directory")
     parser.add_argument("--model", type=str, default='mobilenet_v3_large',
-                        choices=['efficientnet_b2', 'efficientnet_b2_yolo_seg', 'mobilenet_v3_large', 'mobilenet_v3_large_yolo', 'mobilenet_v3_large_yolo_seg'],
+                        choices=[
+                            'efficientnet_b2', 'efficientnet_b2_yolo_seg', 'efficientnet_b2_vegan',
+                            'mobilenet_v3_large', 'mobilenet_v3_large_yolo', 'mobilenet_v3_large_yolo_seg', 'mobilenet_v3_large_vegan'
+                        ],
                         help="Model architecture")
     parser.add_argument("--batch_size", type=int, default=32, help="Batch size")
     parser.add_argument("--num_workers", type=int, default=0, help="Number of data loading workers")
