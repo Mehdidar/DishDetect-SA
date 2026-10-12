@@ -442,6 +442,61 @@ def chart_failure_heatmap():
     return save(fig, "08_failure_heatmap.png")
 
 # ══════════════════════════════════════════════════════════════════════════════
+# CHART 9 — Vegan vs Vegetarian Intelligence Overview
+# ══════════════════════════════════════════════════════════════════════════════
+def chart_vegan_intelligence():
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5.5))
+    fig.patch.set_facecolor(BG)
+    ax1.set_facecolor(BG)
+    ax2.set_facecolor(BG)
+
+    for ax in [ax1, ax2]:
+        ax.spines["bottom"].set_color(SILVER)
+        ax.spines["left"].set_color(SILVER)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.tick_params(colors=SILVER, labelsize=9)
+        ax.xaxis.label.set_color(SILVER)
+        ax.yaxis.label.set_color(SILVER)
+
+    # Panel 1: Dataset Composition (Meat-Free Cohort)
+    cats   = ["Vegan\n(100% Plant)", "Vegetarian\n(Dairy/Eggs/Ghee)", "Meat Dishes\n(Excluded)"]
+    counts = [411, 293, 0]
+    colors = [GREEN, ORANGE, RED]
+    bars = ax1.bar(cats, counts, color=colors, width=0.55, edgecolor=WHITE, lw=1)
+    for b, c, n in zip(bars, counts, ["9 dishes", "6 dishes", "10 dishes"]):
+        h = b.get_height()
+        if h > 0:
+            ax1.text(b.get_x() + b.get_width()/2, h + 10, f"{h}\n({n})",
+                     ha="center", va="bottom", color=WHITE, fontweight="bold", fontsize=9)
+        else:
+            ax1.text(b.get_x() + b.get_width()/2, 10, f"0\n({n})",
+                     ha="center", va="bottom", color=RED, fontweight="bold", fontsize=9)
+    ax1.set_ylim(0, 480)
+    ax1.set_title("Meat-Free Cohort: 704 Images across 15 Dishes",
+                  color=WHITE, fontsize=11.5, fontweight="bold", pad=10)
+    ax1.set_ylabel("Image Count", color=SILVER)
+
+    # Panel 2: Benchmark Performance Across Splits
+    bench_names = ["Validation\nAccuracy", "Held-Out\nTest Acc.", "Restaurant\nTest Acc.", "Vegan\nPrecision", "Vegetarian\nRecall"]
+    bench_vals  = [88.79, 87.85, 83.33, 94.55, 93.33]
+    bcolors     = [TEAL, BLUE, PURPLE, GREEN, ORANGE]
+    bars2 = ax2.bar(bench_names, bench_vals, color=bcolors, width=0.55, edgecolor=WHITE, lw=1)
+    for b, v in zip(bars2, bench_vals):
+        ax2.text(b.get_x() + b.get_width()/2, v + 1.2, f"{v:.1f}%",
+                 ha="center", va="bottom", color=WHITE, fontweight="bold", fontsize=9)
+    ax2.set_ylim(0, 105)
+    ax2.axhline(80, color=SILVER, linestyle="--", alpha=0.4, lw=1)
+    ax2.set_title("Performance Benchmarks (MobileNetV3-Large)",
+                  color=WHITE, fontsize=11.5, fontweight="bold", pad=10)
+    ax2.set_ylabel("Score (%)", color=SILVER)
+
+    fig.suptitle("Vegan vs. Vegetarian Classification Benchmark Overview",
+                 color=WHITE, fontsize=14, fontweight="bold", y=1.02)
+    fig.tight_layout()
+    return save(fig, "09_vegan_intelligence.png")
+
+# ══════════════════════════════════════════════════════════════════════════════
 # WORD DOC HELPERS
 # ══════════════════════════════════════════════════════════════════════════════
 def set_cell_bg(cell, hex_color):
@@ -553,6 +608,7 @@ def build_book(charts):
         ("Chapter 10","Lessons Learned"),
         ("Chapter 11","How to Run the Project"),
         ("Chapter 12","Next Steps & Roadmap"),
+        ("Chapter 13","Vegan vs. Vegetarian (Meat-Free) Intelligence Module"),
     ]
     for ch, title in toc_items:
         p = doc.add_paragraph(style="List Number")
@@ -1102,6 +1158,112 @@ def build_book(charts):
     wbullet(doc, "Publish model to Hugging Face Hub",
             "for community access and benchmarking")
 
+    doc.add_page_break()
+
+    # ══════════════════════════════════════════════════════════════════════════
+    # CHAPTER 13 — VEGAN VS. VEGETARIAN (MEAT-FREE) INTELLIGENCE MODULE
+    # ══════════════════════════════════════════════════════════════════════════
+    whead(doc, "Chapter 13 — Vegan vs. Vegetarian (Meat-Free) Intelligence Module", color="1F3864")
+
+    wbody(doc,
+        "In commercial food apps, dietary screening tools, and restaurant POS systems, consumers frequently "
+        "require a distinction beyond simply identifying meat. Vegetarians and strict vegans have distinct dietary "
+        "boundaries: while vegetarians abstain from animal flesh, they may consume dairy (milk, cheese, yogurt), eggs, "
+        "and clarified butter (samneh / ghee). In contrast, strict vegans consume 100% plant-based foods only. "
+        "This chapter introduces DishDetect SA's specialized meat-free intelligence module, designed specifically "
+        "to solve the subtle visual discrimination problem between Vegan and Lacto-Ovo Vegetarian dishes."
+    )
+
+    doc.add_paragraph()
+    whead(doc, "13.1  Dietary Scope: Strict Meat Exclusion", level=2, color="2E75B6")
+    wbody(doc,
+        "All 10 meat, poultry, fish, and seafood categories (Mixed Grill, Shawarma, Shish Tawook, Grilled Kofta, "
+        "Meat Maqluba, Meat Pie, Kofta Stew, Shrimp Sayadiyah, Stuffed Pigeon, and Meat Madfoon) were completely excluded. "
+        "The model evaluates exclusively within the meat-free cohort of 15 Arabic dishes, eliminating trivial meat-vs-salad "
+        "cues and forcing the neural network to learn fine-grained visual indicators of dairy, eggs, and animal fats."
+    )
+
+    doc.add_paragraph()
+    whead(doc, "13.2  Culinary & Ingredient Audit of the 15 Meatless Dishes", level=2, color="2E75B6")
+    wtable(doc,
+        ["Dish Name", "Dietary Category", "Images", "Key Ingredients & Animal Byproduct Audit"],
+        [
+            ["Hummus",            "Vegan",      "61", "Chickpeas, tahini (sesame paste), olive oil, garlic. 100% plant-based."],
+            ["Tamees Bread",      "Vegan",      "53", "Wheat flour, yeast, water, vegetable oil (tandoor-baked). No dairy."],
+            ["Za’atar Manakish",  "Vegan",      "52", "Flatbread with wild thyme, sumac, sesame, extra virgin olive oil."],
+            ["Okra Tagine",       "Vegan",      "45", "Bamya bil-Zayt: Baby okra pods, tomato gravy, coriander, olive oil."],
+            ["Sesame Brittle",    "Vegan",      "45", "Simsimiya: Roasted sesame seeds bound with sugar syrup & lemon."],
+            ["Spinach Fatayer",   "Vegan",      "44", "Levantine spinach pie: Spinach, onions, sumac, olive oil dough."],
+            ["Onion Soup",        "Vegan",      "42", "Shorbat Basal: Caramelized onions, olive oil, vegetable broth, cumin."],
+            ["Pomegranate Fattoush","Vegan",    "37", "Romaine, tomatoes, cucumbers, toasted pita chips, pomegranate molasses."],
+            ["Spinach Stew",      "Vegan",      "32", "Sabanegh bil-Zayt: Fresh spinach, chickpeas, garlic, olive oil."],
+            ["Fatayer Cheese",    "Vegetarian", "86", "Pastry filled with dairy cheese (Akkawi / Halloumi / Nabulsi) & butter."],
+            ["Saffron Cake",      "Vegetarian", "59", "Sponge cake made with eggs, soaked in saffron condensed milk & cream."],
+            ["Rice Pudding",      "Vegetarian", "57", "Roz Bel Laban: Short-grain rice cooked in whole cow's milk & ashta cream."],
+            ["Pistachio Sweet",   "Vegetarian", "57", "Halawet el-Jibn / Mafroukeh: Contains sweet cheese, ashta, & samneh."],
+            ["Pistachio Tamriya", "Vegetarian", "21", "Date confection pan-roasted in clarified butter (samneh / ghee)."],
+            ["Tamriya",           "Vegetarian", "13", "Authentic Saudi date confection roasted in samneh (animal butterfat)."],
+        ]
+    )
+
+    doc.add_paragraph()
+    wimg(doc, c("09_vegan_intelligence.png"), width=6.2,
+         caption="Figure 9 — Vegan vs. Vegetarian dataset composition (left) and benchmark performance across splits (right)")
+
+    doc.add_paragraph()
+    whead(doc, "13.3  Model Architecture & Training Schedule", level=2, color="2E75B6")
+    wbullet(doc, "Architecture:", "MobileNetV3-Large (torchvision), ImageNet pretrained")
+    wbullet(doc, "Input Resolution:", "224×224 pixels")
+    wbullet(doc, "Transfer Learning Schedule:", "Stage 1 (Classifier Head, LR 1e-3, AdamW) for 10 epochs → Stage 2 (Backbone fine-tuning, LR 1e-5, Cosine Annealing) for 15 epochs")
+    wbullet(doc, "Loss Function:", "Cross-Entropy with inverse-frequency class weights (Vegan: 0.86, Vegetarian: 1.20) to counter the mild 1.4:1 ratio")
+    wbullet(doc, "Leakage Prevention:", "Three-way 70/15/15 split grouped by perceptual hash (phash <= 5) to isolate near-duplicates")
+
+    doc.add_paragraph()
+    whead(doc, "13.4  Experimental Results & Test Set Benchmarks", level=2, color="2E75B6")
+    wtable(doc,
+        ["Evaluation Split", "Total Images", "Accuracy", "Weighted Precision", "Weighted Recall", "Weighted F1-Score"],
+        [
+            ["Validation Split", "107", "88.79%", "0.8879", "0.8879", "0.8879"],
+            ["Held-Out Test Split", "107", "87.85%", "0.8875", "0.8785", "0.8793"],
+        ]
+    )
+
+    doc.add_paragraph()
+    wbody(doc,
+        "On the unbiased held-out test set (107 images), the model achieved 95% precision for the Vegan class "
+        "(only 3 vegetarian images were mistakenly classified as vegan) and 93% recall for the Vegetarian class, "
+        "demonstrating strong capability in identifying dairy cheese fillings and rich butter pastries."
+    )
+
+    doc.add_paragraph()
+    whead(doc, "13.5  Real-World Restaurant Testing (Meat-Free Dishes)", level=2, color="2E75B6")
+    wtable(doc,
+        ["Restaurant Dish", "Ground Truth", "Correct / Total", "Accuracy", "Culinary Analysis"],
+        [
+            ["Hummus",          "Vegan",      "5 / 5", "100.0%", "Perfect plant-based legume dip recognition"],
+            ["Okra Tagine",     "Vegan",      "4 / 4", "100.0%", "Correctly identified as olive-oil vegetable stew"],
+            ["Tamees Bread",    "Vegan",      "5 / 5", "100.0%", "Perfect recognition of tandoor plain flatbread"],
+            ["Cheese Fatayer",  "Vegetarian", "4 / 5", "80.0%",  "Successfully detects dairy cheese; recovered from Veg failure"],
+            ["Za’atara Manaqish","Vegan",     "2 / 5", "40.0%",  "Heavy olive oil sheen sometimes mimics melted cheese glaze"],
+            ["OVERALL",         "—",          "20 / 24", "83.33%", "Strong generalization to unseen restaurant photography"],
+        ]
+    )
+
+    doc.add_paragraph()
+    whead(doc, "13.6  Standalone Package Structure", level=2, color="2E75B6")
+    wbody(doc,
+        "A dedicated, self-contained package has been published under Vegan_vs_Vegetarian_Classifier/ with "
+        "its own weights, dataset symlinks, inference tools, and evaluation scripts:"
+    )
+    wcode(doc,
+        "# Run single-image inference:\n"
+        ".venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/predict.py --image 'path/to/dish.jpg'\n\n"
+        "# Run held-out test evaluation:\n"
+        ".venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/evaluate.py --split test\n\n"
+        "# Run real-world restaurant test:\n"
+        ".venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/evaluate_restaurant.py"
+    )
+
     doc.add_paragraph()
     wbody(doc,
         f"\n\nDishDetect SA — Walkthrough Book  ·  github.com/Mehdidar/DishDetect-SA  "
@@ -1126,6 +1288,7 @@ if __name__ == "__main__":
         chart_training_flow(),
         chart_yolo_pipeline(),
         chart_failure_heatmap(),
+        chart_vegan_intelligence(),
     ]
     print("\nBuilding walkthrough book...")
     build_book(charts)
