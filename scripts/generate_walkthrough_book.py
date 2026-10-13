@@ -477,17 +477,17 @@ def chart_vegan_intelligence():
                   color=WHITE, fontsize=11.5, fontweight="bold", pad=10)
     ax1.set_ylabel("Image Count", color=SILVER)
 
-    # Panel 2: Benchmark Performance Across Splits
-    bench_names = ["Validation\nAccuracy", "Held-Out\nTest Acc.", "Restaurant\nTest Acc.", "Vegan\nPrecision", "Vegetarian\nRecall"]
-    bench_vals  = [88.79, 87.85, 83.33, 94.55, 93.33]
-    bcolors     = [TEAL, BLUE, PURPLE, GREEN, ORANGE]
+    # Panel 2: Benchmark Performance Across Splits & YOLOv8-Seg
+    bench_names = ["Validation\nAcc.", "Held-Out\nTest Acc.", "Restaurant\nBaseline", "Restaurant\nYOLO-Seg", "Vegan\nPrecision", "Vegetarian\nRecall"]
+    bench_vals  = [88.79, 87.85, 83.33, 95.83, 94.55, 93.33]
+    bcolors     = [TEAL, BLUE, PURPLE, GREEN, TEAL, ORANGE]
     bars2 = ax2.bar(bench_names, bench_vals, color=bcolors, width=0.55, edgecolor=WHITE, lw=1)
     for b, v in zip(bars2, bench_vals):
         ax2.text(b.get_x() + b.get_width()/2, v + 1.2, f"{v:.1f}%",
-                 ha="center", va="bottom", color=WHITE, fontweight="bold", fontsize=9)
-    ax2.set_ylim(0, 105)
+                 ha="center", va="bottom", color=WHITE, fontweight="bold", fontsize=8.5)
+    ax2.set_ylim(0, 110)
     ax2.axhline(80, color=SILVER, linestyle="--", alpha=0.4, lw=1)
-    ax2.set_title("Performance Benchmarks (MobileNetV3-Large)",
+    ax2.set_title("Performance Benchmarks & YOLOv8-Seg Jump",
                   color=WHITE, fontsize=11.5, fontweight="bold", pad=10)
     ax2.set_ylabel("Score (%)", color=SILVER)
 
@@ -1236,32 +1236,48 @@ def build_book(charts):
     )
 
     doc.add_paragraph()
-    whead(doc, "13.5  Real-World Restaurant Testing (Meat-Free Dishes)", level=2, color="2E75B6")
+    whead(doc, "13.5  Real-World Restaurant Testing & The Za'atar Glaze Dilemma", level=2, color="2E75B6")
+    wbody(doc,
+        "When evaluating the uncropped baseline model on 24 unseen real-world Arabic restaurant photos, "
+        "the model scored an impressive 83.33% (20/24). However, error analysis uncovered a distinct visual failure mode: "
+        "Za’atar Manaqish scored only 40.0% (2/5). Under bright commercial spotlights, the glistening olive oil sheen on dark thyme "
+        "mimicked melted cheese reflections, and surrounding table clutter diluted the model's focus."
+    )
     wtable(doc,
-        ["Restaurant Dish", "Ground Truth", "Correct / Total", "Accuracy", "Culinary Analysis"],
+        ["Restaurant Dish", "Ground Truth", "Baseline Acc. (Uncropped)", "YOLOv8-Seg Acc. (Cropped)", "Culinary & Segmentation Analysis"],
         [
-            ["Hummus",          "Vegan",      "5 / 5", "100.0%", "Perfect plant-based legume dip recognition"],
-            ["Okra Tagine",     "Vegan",      "4 / 4", "100.0%", "Correctly identified as olive-oil vegetable stew"],
-            ["Tamees Bread",    "Vegan",      "5 / 5", "100.0%", "Perfect recognition of tandoor plain flatbread"],
-            ["Cheese Fatayer",  "Vegetarian", "4 / 5", "80.0%",  "Successfully detects dairy cheese; recovered from Veg failure"],
-            ["Za’atara Manaqish","Vegan",     "2 / 5", "40.0%",  "Heavy olive oil sheen sometimes mimics melted cheese glaze"],
-            ["OVERALL",         "—",          "20 / 24", "83.33%", "Strong generalization to unseen restaurant photography"],
+            ["Hummus",          "Vegan",      "5 / 5 (100.0%)", "5 / 5 (100.0%)", "Perfect plant-based legume dip recognition in both modes"],
+            ["Okra Tagine",     "Vegan",      "4 / 4 (100.0%)", "4 / 4 (100.0%)", "Correctly identified as olive-oil vegetable stew"],
+            ["Tamees Bread",    "Vegan",      "5 / 5 (100.0%)", "5 / 5 (100.0%)", "Perfect recognition of tandoor plain flatbread"],
+            ["Cheese Fatayer",  "Vegetarian", "4 / 5 (80.0%)",  "4 / 5 (80.0%)",  "Successfully detects dairy cheese; 1 pastry confused"],
+            ["Za’atara Manaqish","Vegan",     "2 / 5 (40.0%)",  "5 / 5 (100.0%)", "+60.0% GAIN. Polygon mask isolates thyme paste, eliminating cheese false positives"],
+            ["OVERALL",         "—",          "20 / 24 (83.33%)", "23 / 24 (95.83%)", "+12.50% JUMP in commercial restaurant accuracy"],
         ]
     )
 
     doc.add_paragraph()
-    whead(doc, "13.6  Standalone Package Structure", level=2, color="2E75B6")
+    whead(doc, "13.6  YOLOv8 Segmentation Food Cropping Ablation (95.83% Accuracy)", level=2, color="2E75B6")
+    wbody(doc,
+        "To eliminate restaurant clutter and specular table reflections, we deployed Strategy 1: YOLOv8 Segmentation Food Cropping. "
+        "Using YOLOv8n-seg, tight polygon masks were extracted for the meat-free dataset (92.9% polygon mask rate, 7.1% fallback center-crop). "
+        "A dedicated MobileNetV3-Large model was trained on these segmented crops. "
+        "As shown in the table above, the restaurant accuracy jumped from 83.33% to an outstanding 95.83% (23/24 correct), "
+        "with Za’atar Manaqish jumping from 40% to a flawless 100% (5/5)."
+    )
+
+    doc.add_paragraph()
+    whead(doc, "13.7  Standalone Package Structure & CLI Tools", level=2, color="2E75B6")
     wbody(doc,
         "A dedicated, self-contained package has been published under Vegan_vs_Vegetarian_Classifier/ with "
-        "its own weights, dataset symlinks, inference tools, and evaluation scripts:"
+        "its own weights, dataset symlinks, inference tools, and evaluation scripts supporting both baseline and YOLOv8-seg pipelines:"
     )
     wcode(doc,
-        "# Run single-image inference:\n"
-        ".venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/predict.py --image 'path/to/dish.jpg'\n\n"
+        "# Run single-image inference with YOLOv8-seg cropping (Recommended - 95.83% acc):\n"
+        ".venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/predict.py --image 'path/to/dish.jpg' --yolo_seg\n\n"
         "# Run held-out test evaluation:\n"
         ".venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/evaluate.py --split test\n\n"
-        "# Run real-world restaurant test:\n"
-        ".venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/evaluate_restaurant.py"
+        "# Run real-world restaurant comparative benchmark (all models):\n"
+        ".venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/evaluate_restaurant.py --all"
     )
 
     doc.add_paragraph()

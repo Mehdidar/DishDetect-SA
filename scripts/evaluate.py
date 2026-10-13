@@ -300,7 +300,7 @@ if __name__ == "__main__":
     parser.add_argument("--model",       type=str,  default='mobilenet_v3_large',
                         choices=[
                             'efficientnet_b2', 'efficientnet_b2_yolo_seg', 'efficientnet_b2_vegan', 'efficientnet_b2_vegan_veg',
-                            'mobilenet_v3_large', 'mobilenet_v3_large_yolo', 'mobilenet_v3_large_yolo_seg', 'mobilenet_v3_large_vegan', 'mobilenet_v3_large_vegan_veg'
+                            'mobilenet_v3_large', 'mobilenet_v3_large_yolo', 'mobilenet_v3_large_yolo_seg', 'mobilenet_v3_large_vegan', 'mobilenet_v3_large_vegan_veg', 'mobilenet_v3_large_vegan_veg_yolo_seg'
                         ])
     parser.add_argument("--split",       type=str,  default='val',
                         choices=['val', 'test'],

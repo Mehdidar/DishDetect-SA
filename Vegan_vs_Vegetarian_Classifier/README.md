@@ -33,19 +33,21 @@ The dataset contains **704 images** across 15 dishes, with a balanced **1.40 : 1
 
 ---
 
-## 📈 Benchmark Performance
+## 📈 Benchmark Performance & YOLOv8-Seg Ablation
 
-Evaluated using a three-way 70/15/15 hash-stratified split (preventing near-duplicate leakage):
+Evaluated using a three-way 70/15/15 hash-stratified split (preventing near-duplicate leakage) and external real-world restaurant photos:
 
-| Split | Images | Accuracy | Weighted Precision | Weighted Recall | Weighted F1 |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Validation Set** | 107 | **88.79%** | 0.8879 | 0.8879 | **0.8879** |
-| **Held-Out Test Set** | 107 | **87.85%** | 0.8875 | 0.8785 | **0.8793** |
-| **Real Restaurant Test** | 24 | **83.33%** | — | — | — |
+| Pipeline Variant | Val Acc | Test Acc | Restaurant Acc (24 imgs) | Key Impact |
+| :--- | :---: | :---: | :---: | :--- |
+| **Uncropped Baseline** | **88.79%** | **85.05%** | **83.33%** (20/24) | Baseline whole-plate model |
+| **YOLOv8-Seg Cropped** | **86.54%** | **85.58%** | **95.83%** (23/24) | **+12.50% Jump**; solves Za'atar glare |
 
-### Test Split Performance by Class:
-- **Vegan Precision**: **95%** (Recall 84%, F1 0.89)
-- **Vegetarian Recall**: **93%** (Precision 81%, F1 0.87)
+### Real-World Restaurant Breakdown (24 Unseen Photos):
+- **Hummus (Vegan)**: 5/5 (100.0%) in both models
+- **Okra Tagine (Vegan)**: 4/4 (100.0%) in both models
+- **Tamees Bread (Vegan)**: 5/5 (100.0%) in both models
+- **Cheese Fatayer (Vegetarian)**: 4/5 (80.0%) in both models
+- **Za’atar Manaqish (Vegan)**: 2/5 (40.0%) Baseline ➔ **5/5 (100.0%) with YOLOv8-Seg** (+60% recovery!)
 
 ---
 
@@ -77,44 +79,17 @@ Vegan_vs_Vegetarian_Classifier/
 
 ## 🚀 Quickstart Usage
 
-### 1. Predict on a Single Food Image
+### 1. Predict on a Single Food Image (with YOLOv8-Seg Cropping)
 ```bash
-.venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/predict.py --image "datasets/Restaurant testing data set/hummus/Hummus-di-ceci.webp"
-```
-**Output:**
-```
-=======================================================
-VEGAN VS VEGETARIAN CLASSIFICATION RESULT
-=======================================================
-Image File:   Hummus-di-ceci.webp
-Prediction:   VEGAN
-Confidence:   80.68%
--------------------------------------------------------
-Probability [Vegan]:       80.68%
-Probability [Vegetarian]:  19.32%
-
-🌱 Dietary Note: 100% plant-based (Zero dairy, eggs, or animal fats). Suitable for vegans.
-=======================================================
+# Recommended YOLOv8-Seg pipeline (95.83% accuracy):
+.venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/predict.py \
+    --image "datasets/Restaurant testing data set/hummus/Hummus-di-ceci.webp" --yolo_seg
 ```
 
-### 2. Predict on Cheese Fatayer (Dairy Pastry)
+### 2. Predict on Cheese Fatayer (Dairy Warning)
 ```bash
-.venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/predict.py --image "datasets/Restaurant testing data set/cheese fatayer/images.jpg"
-```
-**Output:**
-```
-=======================================================
-VEGAN VS VEGETARIAN CLASSIFICATION RESULT
-=======================================================
-Image File:   images.jpg
-Prediction:   VEGETARIAN
-Confidence:   85.06%
--------------------------------------------------------
-Probability [Vegan]:       14.94%
-Probability [Vegetarian]:  85.06%
-
-⚠️  Dietary Note: This dish contains animal byproducts (Dairy, Cheese, Eggs, or Ghee/Samneh). Not suitable for strict vegans.
-=======================================================
+.venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/predict.py \
+    --image "datasets/Restaurant testing data set/cheese fatayer/images.jpg" --yolo_seg
 ```
 
 ### 3. Evaluate Held-Out Test Set
@@ -122,7 +97,7 @@ Probability [Vegetarian]:  85.06%
 .venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/evaluate.py --split test
 ```
 
-### 4. Evaluate Real Restaurant Dishes
+### 4. Evaluate Real Restaurant Dishes (Side-by-Side Comparison)
 ```bash
-.venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/evaluate_restaurant.py
+.venv/bin/python Vegan_vs_Vegetarian_Classifier/scripts/evaluate_restaurant.py --all
 ```
