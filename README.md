@@ -14,6 +14,8 @@ DishDetect SA classifies food images as **Vegetarian** or **Non-Vegetarian** usi
 | Saudi Restaurant Real-World Test (55 images) | **92.73%** |
 | German Cross-Domain Test (2,191 images) | **95.53%** |
 
+![Accuracy across project phases](docs/_charts/02_accuracy_evolution.png)
+
 ---
 
 ## 🧠 Pipeline Stages
@@ -38,7 +40,7 @@ DishDetect SA/
 │   └── utils.py        # Dataset, transforms, helpers
 ├── scripts/            # Training, evaluation & prediction pipeline
 ├── tools/              # Dataset diagnostics & reporting
-├── app/                # Tkinter GUI for live predictions
+├── app/                # Streamlit dashboard for live predictions
 ├── docs/               # Generated reports & documentation
 ├── datasets/           # Training / validation / test splits
 ├── checkpoints/        # Saved model weights
@@ -54,31 +56,39 @@ DishDetect SA/
    pip install -r requirements.txt
    ```
 
-2. **Validate your dataset:**
+2. **Get the model weights:** trained checkpoints are not stored in git (they are too large). Place `best_food_classifier.pth` in `checkpoints/` — <!-- add a download link here, e.g. a GitHub Release asset or Hugging Face --> — or train your own with step 4.
+
+3. **Validate your dataset:**
    ```bash
    python tools/dataset_check.py --dataset /path/to/dataset
    ```
 
-3. **Train the model:**
+4. **Train the model:**
    ```bash
    python scripts/train.py --dataset /path/to/dataset
    ```
    Trains in two stages (frozen backbone → full fine-tuning) and saves the best checkpoint to `checkpoints/`.
 
-4. **Evaluate:**
+5. **Evaluate:**
    ```bash
    python scripts/evaluate.py --dataset /path/to/dataset
    ```
    Saves classification report and confusion matrix to `results/`.
 
-5. **Predict a single image:**
+6. **Predict a single image:**
    ```bash
    python scripts/predict.py --image /path/to/image.jpg --threshold 0.7
    ```
 
-6. **Launch the GUI:**
+7. **Launch the dashboard:**
    ```bash
-   python app/ui.py
+   streamlit run app/ui.py
+   ```
+
+8. **Run the tests:**
+   ```bash
+   pip install pytest
+   pytest
    ```
 
 ---
@@ -113,6 +123,12 @@ python scripts/generate_pipeline_doc.py
 - **Wrapped Shawarma** (pita-style) is the most persistent failure — exterior looks like flatbread
 - **Mandi** struggles due to dominant rice visuals hiding the meat
 - **90.9% restaurant accuracy ceiling** — bottleneck is training data, not model architecture
+
+---
+
+## 📄 License
+
+Released under the [MIT License](LICENSE).
 
 ---
 

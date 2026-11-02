@@ -1,8 +1,19 @@
+# Core: training, evaluation and prediction
 torch
 torchvision
+numpy
+pandas
 scikit-learn
 matplotlib
 Pillow
 imagehash
 tqdm
+ultralytics      # YOLOv8 segmentation / cropping
+
+# Dashboard
 streamlit
+
+# Report generation (scripts/generate_*.py)
+python-docx
+python-pptx
+openpyxl

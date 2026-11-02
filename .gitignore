@@ -34,3 +34,6 @@ german_model_package/
 
 # IDE
 .vscode/
+
+# Test cache
+.pytest_cache/
